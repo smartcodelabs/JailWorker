@@ -1,8 +1,10 @@
 package fr.alienationgaming.jailworker;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Set;
 
+import de.smartbotstudios.jailworker.utils.ItemsToBase64;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -20,7 +22,11 @@ public class JWInventorySaver {
         player.getInventory().setHelmet(null);
 	}
 	public void save(Player player){
-		
+		//TODO SQL Verbindung etc.
+
+		ItemsToBase64.itemStackArrayToBase64(player.getInventory().getContents());
+		ItemsToBase64.itemStackArrayToBase64(player.getInventory().getArmorContents());
+
 		for(int i = 0; i < player.getInventory().getContents().length; i++){
             final ItemStack itemStack = player.getInventory().getContents()[i];
             if(itemStack!= null)
@@ -32,6 +38,27 @@ public class JWInventorySaver {
 		plugin.getJailConfig().set("Prisoners." + player.getName() + ".Inventory.Boots", player.getInventory().getBoots());
 	}
 	public void restore(Player player){
+//TODO SQL Verbindung etc.
+		ItemStack[] i = new ItemStack[0];
+		try {
+			i = ItemsToBase64.itemStackArrayFromBase64("Path");
+			player.getInventory().setContents(i);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+
+
+
+		try {
+			i = ItemsToBase64.itemStackArrayFromBase64("Path");
+			player.getInventory().setArmorContents(i);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+
+
 		Set<String> s = plugin.getJailConfig().getConfigurationSection("Prisoners." + player.getName() + ".Inventory").getKeys(false);
 		Iterator<String> it = s.iterator();
 		ItemStack boots = plugin.getJailConfig().getItemStack("Prisoners." + player.getName() + ".Inventory.Boots");

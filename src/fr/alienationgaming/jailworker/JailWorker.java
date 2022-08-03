@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.sk89q.worldedit.WorldEdit;
+import de.smartbotstudios.jailworker.utils.MySQL;
 import fr.alienationgaming.jailworker.listner.*;
 import net.milkbowl.vault.permission.Permission;
 
@@ -95,6 +96,7 @@ public class JailWorker extends JavaPlugin {
 	public UpdateFiles 												uf = new UpdateFiles(this);
 	private Map<String, Object> 									lang = new HashMap<String, Object>();
 	/* Other*/
+	public static MySQL 											mysql;
 	public GetConfigValues 											getdefaultvalues = new GetConfigValues(this);
 	public JWPlayerInteract 										interactWithPlayer = new JWPlayerInteract(this);
 	public Utils 													utils = new Utils(this);
@@ -388,5 +390,41 @@ public class JailWorker extends JavaPlugin {
 	public void setAllowBlocks(Vector<String> allowBlocks) {
 		this.allowBlocks = allowBlocks;
 	}
-	
+
+	private void ConnectMySQL() {
+
+		File MySQL = new File("plugins/JailWorker/MySQL.yml");
+		YamlConfiguration yMySQL = YamlConfiguration.loadConfiguration(MySQL);
+
+		String Host = yMySQL.getString("MySQL" + ".Host");
+		String Port = yMySQL.getString("MySQL" + ".Port");
+		String Database = yMySQL.getString("MySQL" + ".Database");
+		String User = yMySQL.getString("MySQL" + ".User");
+		String Password = yMySQL.getString("MySQL" + ".Password");
+
+		mysql = new MySQL(Host, Port, Database, User, Password);
+		mysql.update("CREATE TABLE IF NOT EXISTS JailWorker(UUID varchar(32),Amount int UNSIGNED, Reason varchar(1000),From varchar(1000), Inventory varchar(65535),Armor varchar(65535));");
+	}
+	public void loadMySQLFile() {
+
+		File MySQL = new File("plugins/JailWorker/MySQL.yml");
+		YamlConfiguration yMySQL = YamlConfiguration.loadConfiguration(MySQL);
+
+		yMySQL.addDefault("Info", "Die MySQL wird derzeit fuer BlockLog ,CaseOpening und der Bank benoetigt, solltest du dies nicht brauchen kannst du das einfach in der Config ausstellen.");
+
+		yMySQL.addDefault("MySQL" + ".Host", "localhost");
+		yMySQL.addDefault("MySQL" + ".Port", "3306");
+		yMySQL.addDefault("MySQL" + ".Database", "mcDB");
+		yMySQL.addDefault("MySQL" + ".User", "root");
+		yMySQL.addDefault("MySQL" + ".Password", "123");
+
+		yMySQL.options().copyDefaults(true);
+
+		try {
+			yMySQL.save(MySQL);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

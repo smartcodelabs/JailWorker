@@ -4,6 +4,9 @@ Plugin:
   Whitelisted-Commands:
     - /login
     - /logout
+    - /msg
+    - /portal
+    - /hub
 
   # You can change this value by your favorite language (corresponding to the <lang>.yml on the plugin directory)
   Language: en
