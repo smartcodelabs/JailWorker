@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -65,7 +66,7 @@ public class Utils {
 				while (x < Math.max(loc1.getX(), loc2.getX()))
 				{	
 					tmpLoc.setX(x);
-					if (tmpLoc.getBlock().getTypeId() == BlockId || (BlockId == -1 && tmpLoc.getBlock().getTypeId() != 0))
+					if (tmpLoc.getBlock().getType().getId() == BlockId || (BlockId == -1 && tmpLoc.getBlock().getType().getId() != 0))
 					{
 						res++;
 					}
@@ -95,8 +96,8 @@ public class Utils {
 				x = (int) Math.min(loc1.getX(), loc2.getX());
 				while (x <= Math.max(loc1.getX(), loc2.getX())){	
 					tmpLoc.setX(x);
-					if (tmpLoc.getBlock().getTypeId() == BlockId){
-						tmpLoc.getBlock().setTypeId(0);
+					if (tmpLoc.getBlock().getType().getId() == BlockId){
+						tmpLoc.getBlock().setType(Material.AIR);
 						res++;
 					}
 					x++;

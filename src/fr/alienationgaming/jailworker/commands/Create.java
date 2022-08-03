@@ -31,7 +31,7 @@ public class Create implements CommandExecutor {
 			
 			player.sendMessage(plugin.toLanguage("info-command-definetips"));
 			player.sendMessage(plugin.toLanguage("info-command-waitfirstblk"));
-		}
+		}else sender.sendMessage("error-command-no-perms");
 		return true;
 	}
 }

@@ -12,6 +12,8 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.sk89q.worldedit.WorldEdit;
+import fr.alienationgaming.jailworker.listner.*;
 import net.milkbowl.vault.permission.Permission;
 
 import org.bukkit.ChatColor;
@@ -22,10 +24,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+
 
 import fr.alienationgaming.jailworker.commands.Clean;
 import fr.alienationgaming.jailworker.commands.ConfigCmd;
@@ -46,11 +49,6 @@ import fr.alienationgaming.jailworker.commands.SetSpawn;
 import fr.alienationgaming.jailworker.commands.Start;
 import fr.alienationgaming.jailworker.commands.Stop;
 import fr.alienationgaming.jailworker.commands.WhiteCmd;
-import fr.alienationgaming.jailworker.listner.JWBlockBreakListener;
-import fr.alienationgaming.jailworker.listner.JWChatPrisonerPrevent;
-import fr.alienationgaming.jailworker.listner.JWPlayerCommandProtector;
-import fr.alienationgaming.jailworker.listner.JWPrisonerDieListener;
-import fr.alienationgaming.jailworker.listner.JWPutBlockListener;
 import fr.stevecohen.jailworker.configsign.OnConfigSignPlacedListener;
 
 public class JailWorker extends JavaPlugin {
@@ -83,6 +81,7 @@ public class JailWorker extends JavaPlugin {
 	public JWChatPrisonerPrevent 									jwchatprisonerprevent = new JWChatPrisonerPrevent(this);
 	public JWPutBlockListener 										jwputblocklistener = new JWPutBlockListener(this);
 	public OnConfigSignPlacedListener 										jwconfigsignplaced = new OnConfigSignPlacedListener(this);
+	public JWPlayerMoveListener										jwplayermovelistener = new JWPlayerMoveListener(this);
 	/* Tmp values */
 	public Map<Player, Block> 										blockJail1 = new HashMap<Player, Block>();
 	public Map<Player, Block> 										blockJail2 = new HashMap<Player, Block>();
@@ -107,7 +106,7 @@ public class JailWorker extends JavaPlugin {
 	
 	/* Binded plugins */
 	public Permission 												perms = null;
-	public WorldEditPlugin 											worldEdit = null;
+	public Plugin 			 										worldEdit = null;
 	
 	private static JailWorker										instance;
 	
@@ -116,7 +115,7 @@ public class JailWorker extends JavaPlugin {
 	}
 	
 	private boolean setupWorldEdit() {
-		worldEdit = (WorldEditPlugin) this.getServer().getPluginManager().getPlugin("WorldEdit");
+		worldEdit =  this.getServer().getPluginManager().getPlugin("WorldEdit");
 		if (worldEdit == null)
 			return false;
 		return true;
@@ -277,6 +276,7 @@ public class JailWorker extends JavaPlugin {
 		this.getServer().getPluginManager().registerEvents(jwchatprisonerprevent, this);
 		this.getServer().getPluginManager().registerEvents(jwputblocklistener, this);
 		this.getServer().getPluginManager().registerEvents(jwconfigsignplaced, this);
+		this.getServer().getPluginManager().registerEvents(jwplayermovelistener, this);
 
 		/* Register tasks for jails enabled */
 		if (jailConfig != null){

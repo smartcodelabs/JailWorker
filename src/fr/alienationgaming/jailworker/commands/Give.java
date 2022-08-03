@@ -31,7 +31,7 @@ public class Give implements CommandExecutor {
 				return false;
 			target = plugin.getServer().getPlayer(args[0]);
 			try{
-				item = Material.getMaterial(Integer.parseInt(args[1]));
+				item = Material.getMaterial(args[1]);
 			}
 			catch (Exception e){
 				sender.sendMessage(plugin.toLanguage("info-command-materialidlink"));

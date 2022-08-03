@@ -48,8 +48,8 @@ public class Jail {
 		{
 			@SuppressWarnings("deprecation")
 			@Override  
-			public void run()
-			{
+			public void run(){}
+			/*{
 				int lowerX = (int) Math.min(Blk1.getX(), Blk2.getX());
 				int higherX = (int) (Math.max(Blk1.getX(), Blk2.getX()));
 				int lowerY = (int) Math.min(Blk1.getY(), Blk2.getY());
@@ -66,7 +66,7 @@ public class Jail {
 					randomY = (int)(Math.random() * (higherY-lowerY)) + lowerY;
 					randomZ = (int)(Math.random() * (higherZ-lowerZ)) + lowerZ;
 					randomLocation = new Location(world, randomX, randomY, randomZ);
-					while ((randomLocation.getBlock().getTypeId() != 0) || (randomX == BlkSpwn.getBlockX() && randomZ == BlkSpwn.getBlockZ()))
+					while ((randomLocation.getBlock().getType().getId() != 0) || (randomX == BlkSpwn.getBlockX() && randomZ == BlkSpwn.getBlockZ()))
 					{
 						randomX = (int)(Math.random() * (higherX-lowerX)) + lowerX;
 						randomY = (int)(Math.random() * (higherY-lowerY)) + lowerY;
@@ -76,7 +76,7 @@ public class Jail {
 					
 					world.spawnFallingBlock(randomLocation, Material.getMaterial(type.toUpperCase()), (byte) 0);
 				}
-			}
+			}*/
 		}, 30L, (speed * 30));
 	}
 

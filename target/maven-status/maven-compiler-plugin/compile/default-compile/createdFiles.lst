@@ -12,6 +12,7 @@ fr\stevecohen\jailworker\configsign\OnConfigSignPlacedListener.class
 fr\alienationgaming\jailworker\commands\Info.class
 fr\alienationgaming\jailworker\commands\Give.class
 fr\stevecohen\jailworker\configsign\MySign.class
+fr\alienationgaming\jailworker\listner\JWPlayerMoveListener.class
 fr\stevecohen\jailworker\configsign\SignConfigurator$1.class
 fr\stevecohen\jailworker\configsign\SignConfigurator$State$3.class
 fr\alienationgaming\jailworker\commands\Increase.class
@@ -21,6 +22,7 @@ fr\alienationgaming\jailworker\listner\JWSelectPrisonerSpawn.class
 fr\alienationgaming\jailworker\commands\Stop.class
 fr\stevecohen\jailworker\configsign\SignConfigurator$State$5.class
 fr\stevecohen\jailworker\configsign\SignConfigurator$2.class
+fr\alienationgaming\jailworker\listner\JWBlockBreakListener$1.class
 fr\alienationgaming\jailworker\commands\Clean.class
 fr\alienationgaming\jailworker\Utils.class
 fr\stevecohen\jailworker\configsign\SignConfigurator$State.class

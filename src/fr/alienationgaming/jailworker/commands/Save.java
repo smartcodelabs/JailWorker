@@ -2,13 +2,19 @@ package fr.alienationgaming.jailworker.commands;
 
 import java.util.ArrayList;
 
+import com.sk89q.worldedit.LocalSession;
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldedit.session.SessionManager;
+import com.sk89q.worldedit.util.formatting.text.TextComponent;
+import com.sk89q.worldedit.world.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import com.sk89q.worldedit.bukkit.selections.Selection;
 
 import fr.alienationgaming.jailworker.JailWorker;
 
@@ -32,11 +38,12 @@ public class Save implements CommandExecutor {
 		}
 		final Player player = (Player) sender;
 
+
 		if (args.length == 0){
 			return false;
 		}
 		if (plugin.hasPerm(player, "jailworker.jw-admin") || plugin.hasPerm(player, "jailworker.jw-create")){
-			Selection worldEditSelection = this.getWorldEditSelection(player);
+			Region worldEditSelection = this.getSelection(player);
 			if (worldEditSelection == null) { //Si pas de selection worldEdit ou pas le plugin WorldEdit installé
 				useWorldEditSelection = false;
 				if ((plugin.blockJail1.get(player) == null  || plugin.blockJail2.get(player) == null) || plugin.JailPrisonerSpawn.get(player) == null){ // On check les 3 points obligatoires
@@ -58,18 +65,20 @@ public class Save implements CommandExecutor {
 					player.sendMessage(plugin.toLanguage("error-command-notpermtoredefine"));
 					return true;
 				}else {
-					Vector locBlk1 = useWorldEditSelection ? worldEditSelection.getMinimumPoint().toVector() : plugin.blockJail1.get(player).getLocation().toVector();
+					Region region = getSelection(player);
+					Vector locBlk1 = useWorldEditSelection ? new Vector(region.getMinimumPoint().getX(),region.getMinimumPoint().getY(),region.getMinimumPoint().getZ()) : plugin.blockJail1.get(player).getLocation().toVector();
 					plugin.getJailConfig().set("Jails." + jailName + ".Location.Block1", locBlk1);
-					Vector locBlk2 = useWorldEditSelection ? worldEditSelection.getMaximumPoint().toVector() : plugin.blockJail2.get(player).getLocation().toVector();
+					Vector locBlk2 = useWorldEditSelection ? new Vector(region.getMaximumPoint().getX(),region.getMaximumPoint().getY(),region.getMaximumPoint().getZ()): plugin.blockJail2.get(player).getLocation().toVector();
 					plugin.getJailConfig().set("Jails." + jailName + ".Location.Block2", locBlk2);
 					Vector locspawn = plugin.JailPrisonerSpawn.get(player).toVector();
 					plugin.getJailConfig().set("Jails." + jailName + ".Location.PrisonerSpawn", locspawn);
 				}
 			} else {
 				/* Setup Default values */
-				Vector locBlk1 = useWorldEditSelection ? worldEditSelection.getMinimumPoint().toVector() : plugin.blockJail1.get(player).getLocation().toVector();
+				Region region = getSelection(player);
+				Vector locBlk1 = useWorldEditSelection ? new Vector(region.getMinimumPoint().getX(),region.getMinimumPoint().getY(),region.getMinimumPoint().getZ()) : plugin.blockJail1.get(player).getLocation().toVector();
 				plugin.getJailConfig().set("Jails." + jailName + ".Location.Block1", locBlk1);
-				Vector locBlk2 = useWorldEditSelection ? worldEditSelection.getMaximumPoint().toVector() : plugin.blockJail2.get(player).getLocation().toVector();
+				Vector locBlk2 = useWorldEditSelection ? new Vector(region.getMaximumPoint().getX(),region.getMaximumPoint().getY(),region.getMaximumPoint().getZ()) : plugin.blockJail2.get(player).getLocation().toVector();
 				plugin.getJailConfig().set("Jails." + jailName + ".Location.Block2", locBlk2);
 				Vector locspawn = plugin.JailPrisonerSpawn.get(player).toVector();
 				plugin.getJailConfig().set("Jails." + jailName + ".Location.PrisonerSpawn", locspawn);
@@ -117,9 +126,28 @@ public class Save implements CommandExecutor {
 		return true;
 	}
 
-	private Selection getWorldEditSelection(Player player) {
-		if (plugin.worldEdit != null)
-			return (plugin.worldEdit.getSelection(player));
-		return null;
+
+
+	private Region getSelection(Player player){
+			Region region = null;
+			if (plugin.worldEdit != null) {
+				com.sk89q.worldedit.entity.Player actor = BukkitAdapter.adapt(player); // WorldEdit's native Player class extends Actor
+				SessionManager manager = WorldEdit.getInstance().getSessionManager();
+				LocalSession localSession = manager.get(actor);
+				World selectionWorld = localSession.getSelectionWorld();
+
+				try {
+					if (selectionWorld == null) throw new Exception();
+					region = localSession.getSelection(selectionWorld);
+				} catch (Exception ex) {
+					actor.printError(TextComponent.of("Please make a region selection first."));
+					return null;
+				}
+			}
+
+
+			return region;
+
+
 	}
 }

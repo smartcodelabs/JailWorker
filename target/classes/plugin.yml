@@ -1,7 +1,7 @@
 name: JailWorker
 main: fr.alienationgaming.jailworker.JailWorker
 version: 2.0.0
-depends: [Vault]
+depend: [Vault,WorldEdit]
 commands:
    jw-player:
       description: send player to prison.
@@ -90,7 +90,7 @@ commands:
    jw-give:
       description: give an item to the prisoner.
       aliases: jail-give
-      usage: /jw-give <player> <item ID>
+      usage: /jw-give <player> <item type>
       permission: jailworker.jw-give
       permission-message: You don't have permission!
    jw-whitecmd:

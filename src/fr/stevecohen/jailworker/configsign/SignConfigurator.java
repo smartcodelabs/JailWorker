@@ -2,6 +2,7 @@ package fr.stevecohen.jailworker.configsign;
 
 import java.util.Vector;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -218,11 +219,11 @@ public class SignConfigurator {
 
 	@SuppressWarnings("deprecation")
 	public void destroySigns() {
-		prevSign.location.getBlock().setTypeId(0);
-		nextSign.location.getBlock().setTypeId(0);
-		upSign.location.getBlock().setTypeId(0);
-		downSign.location.getBlock().setTypeId(0);
-		centralSign.location.getBlock().setTypeId(0);
+		prevSign.location.getBlock().setType(Material.AIR);
+		nextSign.location.getBlock().setType(Material.AIR);
+		upSign.location.getBlock().setType(Material.AIR);
+		downSign.location.getBlock().setType(Material.AIR);
+		centralSign.location.getBlock().setType(Material.AIR);
 	}
 
 	private void cleanConfigurator() {

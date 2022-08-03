@@ -3,19 +3,19 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.stevecohen.jailworker</groupId>
 	<artifactId>JailWorker</artifactId>
-	<version>2.0.0</version>
+	<version>3.0.0</version>
 	<repositories>
 		<repository>
 			<id>bukkit-repo</id>
 			<url>http://repo.bukkit.org/content/groups/public/</url>
 		</repository>
 		<repository>
-			<id>vault-repo</id>
-			<url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
 		</repository>
 		<repository>
-			<id>worldedit-repo</id>
-			<url>http://maven.sk89q.com/repo</url>
+			<id>enginehub-maven</id>
+			<url>https://maven.enginehub.org/repo/</url>
 		</repository>
 	</repositories>
 	<dependencies>
@@ -26,16 +26,22 @@
 		<!-- <scope>provided</scope> -->
 		<!-- </dependency> -->
 		<dependency>
-			<groupId>net.milkbowl.vault</groupId>
+			<groupId>com.github.MilkBowl</groupId>
 			<artifactId>VaultAPI</artifactId>
-			<version>1.5</version>
+			<version>1.7</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.sk89q</groupId>
-			<artifactId>worldedit</artifactId>
-			<version>6.0.0-SNAPSHOT</version>
+			<groupId>com.sk89q.worldedit</groupId>
+			<artifactId>worldedit-Bukkit</artifactId>
+			<version>7.2.6-SNAPSHOT</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+	<properties>
+		<maven.compiler.source>16</maven.compiler.source>
+		<maven.compiler.target>16</maven.compiler.target>
+	</properties>
 	<build>
 		<resources>
 			<resource>
@@ -47,17 +53,17 @@
 		</resources>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
-			<plugin>
+			<!--<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.10.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>16</source>
+					<target>16</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.4</version>
+				<version>3.3.0</version>
 				<executions>
 					<execution>
 						<id>bundle-release</id>
@@ -72,7 +78,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin>-->
 		</plugins>
 	</build>
 
