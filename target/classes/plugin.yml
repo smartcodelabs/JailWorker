@@ -1,6 +1,7 @@
 name: JailWorker
 main: fr.alienationgaming.jailworker.JailWorker
 version: 3.0.0
+api-version: 1.16
 depend: [Vault,WorldEdit]
 commands:
    jw-player:
