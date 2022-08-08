@@ -51,7 +51,7 @@ public class JWPutBlockListener implements Listener {
 		if (jailName == null)
 			return;
 		/* else */
-		if (!plugin.getJailConfig().getStringList("Jails." + jailName + ".Owners").contains(player.getName())){
+		if (!player.hasPermission("jail.admin.build")){
 			player.sendMessage(plugin.toLanguage("info-listener-notowner"));
 			event.setCancelled(true);
 		}

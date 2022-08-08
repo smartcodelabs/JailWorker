@@ -4,16 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.common.base.Predicates;
 import com.sk89q.worldedit.WorldEdit;
 import de.smartbotstudios.jailworker.utils.MySQL;
+import fr.alienationgaming.jailworker.commands.*;
+import fr.alienationgaming.jailworker.commands.List;
 import fr.alienationgaming.jailworker.listner.*;
 import net.milkbowl.vault.permission.Permission;
 
@@ -30,30 +31,11 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
-
-import fr.alienationgaming.jailworker.commands.Clean;
-import fr.alienationgaming.jailworker.commands.ConfigCmd;
-import fr.alienationgaming.jailworker.commands.Create;
-import fr.alienationgaming.jailworker.commands.Delete;
-import fr.alienationgaming.jailworker.commands.Free;
-import fr.alienationgaming.jailworker.commands.Give;
-import fr.alienationgaming.jailworker.commands.Goto;
-import fr.alienationgaming.jailworker.commands.Increase;
-import fr.alienationgaming.jailworker.commands.Info;
-import fr.alienationgaming.jailworker.commands.JailPlayer;
-import fr.alienationgaming.jailworker.commands.List;
-import fr.alienationgaming.jailworker.commands.OwnerManager;
-import fr.alienationgaming.jailworker.commands.Reload;
-import fr.alienationgaming.jailworker.commands.Restart;
-import fr.alienationgaming.jailworker.commands.Save;
-import fr.alienationgaming.jailworker.commands.SetSpawn;
-import fr.alienationgaming.jailworker.commands.Start;
-import fr.alienationgaming.jailworker.commands.Stop;
-import fr.alienationgaming.jailworker.commands.WhiteCmd;
 import fr.stevecohen.jailworker.configsign.OnConfigSignPlacedListener;
 
 public class JailWorker extends JavaPlugin {
 
+	public ArrayList<String> 										prisoners = new ArrayList<>();
 	/* Commands declarations */
 	private Create 													jailset = new Create(this);
 	private JailPlayer 												jailplayer = new JailPlayer(this);
@@ -74,6 +56,9 @@ public class JailWorker extends JavaPlugin {
 	private Reload 													jailreload = new Reload(this);
 	private Increase 												jailincrease = new Increase(this);
 	private OwnerManager											jailmanageowners = new OwnerManager(this);
+	private JaCMD													jaCmd = new JaCMD(this);
+	private NeinCMD													neinCMD = new NeinCMD(this);
+	private StartJailCMD											startJailCMD = new StartJailCMD(this);
 
 	/* Listeners */
 	public JWBlockBreakListener 									jwblockbreaklistener = new JWBlockBreakListener(this);
@@ -96,7 +81,7 @@ public class JailWorker extends JavaPlugin {
 	public UpdateFiles 												uf = new UpdateFiles(this);
 	private Map<String, Object> 									lang = new HashMap<String, Object>();
 	/* Other*/
-	public static MySQL 											mysql;
+	public MySQL 													mysql;
 	public GetConfigValues 											getdefaultvalues = new GetConfigValues(this);
 	public JWPlayerInteract 										interactWithPlayer = new JWPlayerInteract(this);
 	public Utils 													utils = new Utils(this);
@@ -259,6 +244,8 @@ public class JailWorker extends JavaPlugin {
 			getLogger().log(Level.INFO, "WorldEdit not found, you'll not be able to use WorldEdit selection to define the jails.\nBut you can use my simple selection system.");
 
 		/* Init Defauts Config */
+		this.loadMySQLFile();
+		this.ConnectMySQL();
 		this.saveDefaultConfig();
 		this.saveDefaultJailConfig();
 		this.saveDefaultEnFile();
@@ -317,7 +304,14 @@ public class JailWorker extends JavaPlugin {
 		getCommand("jw-reload").setExecutor((CommandExecutor)jailreload);
 		getCommand("jw-increase").setExecutor((CommandExecutor)jailincrease);
 		getCommand("jw-manageowners").setExecutor((CommandExecutor)jailmanageowners);
-		
+		getCommand("ja").setExecutor((CommandExecutor)jaCmd);
+		getCommand("nein").setExecutor((CommandExecutor)neinCMD);
+		getCommand("startjail").setExecutor((CommandExecutor)startJailCMD);
+
+
+
+
+
 		allowBlocks.add("SAND");
 		allowBlocks.add("DIRT");
 		allowBlocks.add("STONE");
@@ -403,7 +397,8 @@ public class JailWorker extends JavaPlugin {
 		String Password = yMySQL.getString("MySQL" + ".Password");
 
 		mysql = new MySQL(Host, Port, Database, User, Password);
-		mysql.update("CREATE TABLE IF NOT EXISTS JailWorker(UUID varchar(32),Amount int UNSIGNED, Reason varchar(1000),From varchar(1000), Inventory varchar(65535),Armor varchar(65535));");
+		mysql.update("CREATE TABLE IF NOT EXISTS JailWorker(UUID VARCHAR(36),Amount INT, Reason VARCHAR(1000),Jailer VARCHAR(1000), Inventory TEXT,Armor TEXT);");
+		mysql.update("CREATE TABLE IF NOT EXISTS JailWorkerCooldowns(UUID varchar(36),Time FLOAT);");
 	}
 	public void loadMySQLFile() {
 
@@ -427,4 +422,26 @@ public class JailWorker extends JavaPlugin {
 		}
 	}
 
+	public boolean isPrisoner(Player p){
+		try (ResultSet rs = mysql.query("SELECT UUID FROM JailWorker WHERE UUID= '" + p.getUniqueId().toString() + "'")) {
+			try {
+				if ((!rs.next()) || (String.valueOf(rs.getString("UUID")) == null)) {
+					System.out.println(1);
+					return false;
+				} else {
+					System.out.println(2);
+
+					return true;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println(3);
+
+				return false;
+
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

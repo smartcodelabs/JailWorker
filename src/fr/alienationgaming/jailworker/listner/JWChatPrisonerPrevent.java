@@ -26,7 +26,7 @@ public class JWChatPrisonerPrevent implements Listener {
 		GetConfigValues gcv = new GetConfigValues(plugin);
 		if (!gcv.prisonersSpeak())
 		{
-			if (plugin.getJailConfig().contains("Prisoners." + player.getName())){
+			if (plugin.prisoners.contains(player.getName())){
 				event.setCancelled(true);
 				player.sendMessage(plugin.toLanguage("info-listener-justwork"));
 			}

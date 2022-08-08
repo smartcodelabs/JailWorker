@@ -86,7 +86,7 @@ public class JailPlayer implements CommandExecutor {
 			plugin.getJailConfig().set("Prisoners." + target.getName() + ".Gamemode", target.getGameMode().name());
 			if (target.getGameMode() == GameMode.CREATIVE)
 				target.setGameMode(GameMode.SURVIVAL);
-			invSaver.save(target);
+			invSaver.save(target,blocks,cause, sender.getName());
 			invSaver.clear(target);
 			plugin.saveJailConfig();
 			plugin.reloadJailConfig();

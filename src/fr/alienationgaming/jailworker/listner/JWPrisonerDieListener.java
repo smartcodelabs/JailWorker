@@ -22,7 +22,7 @@ public class JWPrisonerDieListener implements Listener {
 	    public void onPlayerRespawn(PlayerRespawnEvent event) {
 	        
 		 Player player = event.getPlayer();
-		 if (plugin.getJailConfig().contains("Prisoners." + player.getName())){
+		 if (plugin.prisoners.contains(player.getName())){
 			 String jailName = plugin.getJailConfig().getString("Prisoners." + player.getName() + ".Prison");
 			 Vector spawn = plugin.getJailConfig().getVector("Jails." + jailName + ".Location.PrisonerSpawn");
 			 World world = plugin.getServer().getWorld(plugin.getJailConfig().getString("Jails." + jailName + ".World"));

@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -24,10 +25,11 @@ public class JWPlayerMoveListener implements Listener {
     }
 
 
+
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
         Player player = e.getPlayer();
-        if (plugin.getJailConfig().contains("Prisoners." + player.getName())) {
+        if (plugin.prisoners.contains(player.getName())) {
 
             String jailName = "jail";
 
@@ -51,7 +53,9 @@ public class JWPlayerMoveListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        if (plugin.getJailConfig().contains("Prisoners." + player.getName())) {
+        if (plugin.isPrisoner(player)) {
+
+            if (!plugin.prisoners.contains(player.getName()))plugin.prisoners.add(player.getName());
 
             String jailName = "jail";
 

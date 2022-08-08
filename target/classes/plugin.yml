@@ -3,6 +3,24 @@ main: fr.alienationgaming.jailworker.JailWorker
 version: 2.0.0
 depend: [Vault,WorldEdit]
 commands:
+   ja:
+      description: start a vote to send player to prison.
+      aliases: yes
+      usage: /ja
+      permission: smartserver.startkick.vote
+      permission-message: You don't have permission!
+   nein:
+      description: start a vote to send player to prison.
+      aliases: no
+      usage: /nein
+      permission: smartserver.startkick.vote
+      permission-message: You don't have permission!
+   startjail:
+      description: start a vote to send player to prison.
+      aliases: startjail
+      usage: /startjail <player> <reason>
+      permission: smartserver.startkick.use
+      permission-message: You don't have permission!
    jw-player:
       description: send player to prison.
       aliases: jail-player
