@@ -57,7 +57,7 @@ public class JWBlockBreakListener implements Listener {
 		if (plugin.prisoners.contains( player.getName()) || player.hasPermission("jail.admin.build")){
 			if (plugin.prisoners.contains(player.getName())){
 				Material type = Material.getMaterial(plugin.getJailConfig().getString("Jails." + jailName + ".Type"));
-				if (event.getBlock().getType().getId() == 2)
+				if (event.getBlock().getType() == Material.GRASS_BLOCK)
 					event.getBlock().setType(Material.DIRT);
 				if (event.getBlock().getType() == type)
 				{

@@ -13,9 +13,7 @@ C:\Users\jason\IdeaProjects\JailWorker\src\fr\stevecohen\jailworker\configsign\O
 C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\commands\Delete.java
 C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\commands\ConfigCmd.java
 C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\Jail.java
-C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\commands\JaCMD.java
 C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\commands\List.java
-C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\commands\StartJailCMD.java
 C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\listner\JWPutBlockListener.java
 C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\commands\Create.java
 C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\commands\Give.java
@@ -23,7 +21,6 @@ C:\Users\jason\IdeaProjects\JailWorker\src\fr\stevecohen\jailworker\configsign\J
 C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\commands\Stop.java
 C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\listner\JWBlockBreakListener.java
 C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\commands\JailPlayer.java
-C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\commands\NeinCMD.java
 C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\commands\Reload.java
 C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\GetConfigValues.java
 C:\Users\jason\IdeaProjects\JailWorker\src\fr\alienationgaming\jailworker\UpdateFiles.java

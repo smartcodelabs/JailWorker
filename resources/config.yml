@@ -31,3 +31,5 @@ Jails:
   Speed: 2
   
   Type: SAND
+
+StartJailPrefix: 'StartJail'

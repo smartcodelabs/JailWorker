@@ -56,9 +56,7 @@ public class JailWorker extends JavaPlugin {
 	private Reload 													jailreload = new Reload(this);
 	private Increase 												jailincrease = new Increase(this);
 	private OwnerManager											jailmanageowners = new OwnerManager(this);
-	private JaCMD													jaCmd = new JaCMD(this);
-	private NeinCMD													neinCMD = new NeinCMD(this);
-	private StartJailCMD											startJailCMD = new StartJailCMD(this);
+
 
 	/* Listeners */
 	public JWBlockBreakListener 									jwblockbreaklistener = new JWBlockBreakListener(this);
@@ -304,9 +302,7 @@ public class JailWorker extends JavaPlugin {
 		getCommand("jw-reload").setExecutor((CommandExecutor)jailreload);
 		getCommand("jw-increase").setExecutor((CommandExecutor)jailincrease);
 		getCommand("jw-manageowners").setExecutor((CommandExecutor)jailmanageowners);
-		getCommand("ja").setExecutor((CommandExecutor)jaCmd);
-		getCommand("nein").setExecutor((CommandExecutor)neinCMD);
-		getCommand("startjail").setExecutor((CommandExecutor)startJailCMD);
+
 
 
 
